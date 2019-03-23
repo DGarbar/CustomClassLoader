@@ -7,12 +7,17 @@ public class CglibStarter {
     StringInputParametersFormatter formatter = new StringInputParametersFormatter();
     Map<String, String> replacerMap = formatter.formatParameters(args);
 
+    CglibStarter cglibStarter = new CglibStarter();
+    System.out.println(cglibStarter.invokeProxy(replacerMap));
+  }
+
+  public String invokeProxy(Map<String, String> replacerMap){
     Enhancer enhancer = new Enhancer();
     enhancer.setSuperclass(TextService.class);
     enhancer.setCallback(new CglibMethodInterceptor(replacerMap));
 
     TextService textService = (TextService) enhancer.create();
 
-    System.out.println(textService.staticText());
+    return textService.staticText();
   }
 }
