@@ -1,7 +1,7 @@
 public class TextService {
 
   public String  staticText() {
-    return "Some static text";
+    return "Some static texaaaaaaaaaat";
   }
 
   public String variable(String variable) {

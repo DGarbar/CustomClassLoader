@@ -15,8 +15,8 @@ public class Starter {
             .findClass("TextService");
         Object textService = textServiceClass.getMethod("staticText")
             .invoke(textServiceClass.getConstructors()[0].newInstance());
-        Thread.sleep(6000);
         System.out.println((String) textService);
+        Thread.sleep(6000);
       } catch (  InvocationTargetException | InstantiationException | IllegalAccessException | InterruptedException | NoSuchMethodException e) {
         e.printStackTrace();
       }

@@ -4,22 +4,22 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <properties>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-compiler-plugin</artifactId>
-      <version>3.8.0</version>
-      <configuration>
-        <release>11</release>
-      </configuration>
-    </plugin>
-
-
-  </properties>
-
-  <groupId>ProCampGL</groupId>
+  <groupId>ua.procamp</groupId>
   <artifactId>jwm_internals</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+  </properties>
+
+  <modules>
+    <module>customClassLoader</module>
+    <module>proxyObject</module>
+
+
+  </modules>
+
 
 
 </project>
