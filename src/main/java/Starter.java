@@ -17,7 +17,7 @@ public class Starter {
             .invoke(textServiceClass.getConstructors()[0].newInstance());
         Thread.sleep(6000);
         System.out.println((String) textService);
-      } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException | InterruptedException | NoSuchMethodException e) {
+      } catch (  InvocationTargetException | InstantiationException | IllegalAccessException | InterruptedException | NoSuchMethodException e) {
         e.printStackTrace();
       }
     }

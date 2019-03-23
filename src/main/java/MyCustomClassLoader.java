@@ -1,5 +1,7 @@
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -9,28 +11,27 @@ import java.util.Map;
 public class MyCustomClassLoader extends ClassLoader {
 
   Map<String, byte[]> fileHash = new HashMap<>();
-
   @Override
-  public Class<?> findClass(String name) throws ClassNotFoundException {
-    byte[] b = loadClassFromFile(name);
-    fileHash.put(name, b);
-    return defineClass(name, b, 0, b.length);
-  }
-
-  private byte[] loadClassFromFile(String fileName) {
-    InputStream inputStream = getClass().getClassLoader().getResourceAsStream(
-        fileName.replace('.', File.separatorChar) + ".class");
-    byte[] buffer;
-    ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-    int nextValue = 0;
+  public Class<?> findClass(String s) {
+    byte[] bytes = new byte[0];
     try {
-      while ((nextValue = inputStream.read()) != -1) {
-        byteStream.write(nextValue);
-      }
+      bytes = loadClassData(s);
     } catch (IOException e) {
       e.printStackTrace();
     }
-    buffer = byteStream.toByteArray();
-    return buffer;
+    return defineClass(s, bytes, 0, bytes.length);
+
+  }
+
+  private byte[] loadClassData(String className) throws IOException {
+    String path = getClass().getClassLoader().getResource(className + ".class").getPath();
+    File f = new File( path);
+    int size = (int) f.length();
+    byte buff[] = new byte[size];
+    FileInputStream fis = new FileInputStream(f);
+    DataInputStream dis = new DataInputStream(fis);
+    dis.readFully(buff);
+    dis.close();
+    return buff;
   }
 }
