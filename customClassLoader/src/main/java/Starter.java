@@ -1,23 +1,18 @@
 import java.lang.reflect.InvocationTargetException;
-import javax.tools.JavaCompiler;
-import javax.tools.ToolProvider;
 
 public class Starter {
 
   public static void main(String[] args) {
-    JavaCompiler systemJavaCompiler = ToolProvider.getSystemJavaCompiler();
-    MyCustomClassLoader myCustomClassLoader = new MyCustomClassLoader();
-
+    TextServiceChangeTracker textServiceChangeTracker = new TextServiceChangeTracker();
     while (true) {
       try {
-        myCustomClassLoader = new MyCustomClassLoader();
-        Class<TextService> textServiceClass = (Class<TextService>) myCustomClassLoader
-            .findClass("TextService");
-        Object textService = textServiceClass.getMethod("staticText")
+        Class<TextService> textServiceClass = (Class<TextService>) textServiceChangeTracker
+            .getClass("TextService");
+        Object text = textServiceClass.getMethod("staticText")
             .invoke(textServiceClass.getConstructors()[0].newInstance());
-        System.out.println((String) textService);
+        System.out.println((String) text);
         Thread.sleep(6000);
-      } catch (  InvocationTargetException | InstantiationException | IllegalAccessException | InterruptedException | NoSuchMethodException e) {
+      } catch (InvocationTargetException | InstantiationException | IllegalAccessException | InterruptedException | NoSuchMethodException e) {
         e.printStackTrace();
       }
     }
