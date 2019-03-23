@@ -16,6 +16,7 @@
   <modules>
     <module>customClassLoader</module>
     <module>proxyObject</module>
+    <module>Microbenchmarking</module>
 
 
   </modules>
