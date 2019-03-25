@@ -100,21 +100,21 @@ public class StreamParallelBenchmark {
   @Benchmark
   @BenchmarkMode(Mode.AverageTime)
   @OutputTimeUnit(TimeUnit.NANOSECONDS)
-  public void testHashSetParallelStreamSortred() {
+  public void testHashSetParallelStreamSorted() {
     hashSetIntegers.parallelStream().sorted().reduce(Integer::sum);
   }
 
   @Benchmark
   @BenchmarkMode(Mode.AverageTime)
   @OutputTimeUnit(TimeUnit.NANOSECONDS)
-  public void testArrayListStreamSortred() {
+  public void testArrayListStreamSorted() {
     arrayListIntegers.stream().sorted().reduce(Integer::sum);
   }
 
   @Benchmark
   @BenchmarkMode(Mode.AverageTime)
   @OutputTimeUnit(TimeUnit.NANOSECONDS)
-  public void testArrayListParallelStreamSortred() {
+  public void testArrayListParallelStreamSorted() {
     arrayListIntegers.parallelStream().sorted().reduce(Integer::sum);
   }
 
