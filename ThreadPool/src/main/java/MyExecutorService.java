@@ -1,4 +1,4 @@
-
+import Exceptions.WorkQueueIsFullException;
 
 public interface MyExecutorService {
   /**
@@ -9,7 +9,7 @@ public interface MyExecutorService {
    * @throws WorkQueueIsFullException if this task cannot be accepted for execution due
    *                                  to workQueue is full
    */
-  void execute(Runnable command);
+  void execute(Runnable command) throws WorkQueueIsFullException, InterruptedException;
 
   /**
    * Attempts to stop all actively executing tasks.

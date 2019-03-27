@@ -1,4 +1,4 @@
-import Exceptions.ThreadPoolSizeException;
+import Exceptions.WorkQueueIsFullException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -13,45 +13,29 @@ public class MyExecutorServiceImpl implements MyExecutorService {
     this.poolSize = poolSize;
     workers = new LinkedList<>();
     workQueue = new MyBlockingQueue<>(workQueueSize);
-    updateThreadPool();
+    initThreadPoll();
   }
 
-
-  private synchronized Thread getThread(Runnable runnable) throws ThreadPoolSizeException {
-    if (workers.size() >= poolSize) {
-      if (!cleanThreadPool()) {
-        throw new ThreadPoolSizeException("Thread is not empty");
-      }
-    }
-    Thread thread = new Thread(runnable);
-    workers.add(thread);
-    return thread;
-  }
-
-  private synchronized boolean cleanThreadPool() {
-    return workers.removeIf(next -> !next.isAlive());
-  }
-
-  private synchronized void updateThreadPool() {
-    cleanThreadPool();
-    try {
-      for (int i = 0; i < poolSize - workers.size(); i++) {
-        Thread thread = getThread(workQueue.take());
-        thread.start();
-      }
-    } catch (ThreadPoolSizeException e) {
-      e.printStackTrace();
+  private void initThreadPoll() {
+    for (int i = 0; i < poolSize; i++) {
+      Thread thread = new Thread(() -> {
+        while (true) {
+          workQueue.take().run();
+        }
+      });
+      workers.add(thread);
+      thread.start();
     }
   }
 
   @Override
-  public void execute(Runnable command) {
+  public void execute(Runnable command) throws WorkQueueIsFullException {
     workQueue.put(command);
   }
 
   @Override
   public void shutdownNow() {
-
+    workers.forEach(Thread::interrupt);
   }
 
 }

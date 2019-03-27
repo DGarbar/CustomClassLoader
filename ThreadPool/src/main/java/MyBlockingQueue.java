@@ -1,9 +1,12 @@
+import Exceptions.WorkQueueIsFullException;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.logging.Logger;
 
 public class MyBlockingQueue<T> {
 
+  private static final Logger LOGGER = Logger.getLogger(MyBlockingQueue.class.getSimpleName());
   private Queue<T> queue;
   private final int size;
 
@@ -13,30 +16,37 @@ public class MyBlockingQueue<T> {
   }
 
   public synchronized T take() {
-    while (queue.size() == 0) {
-      try {
+    try {
+      while (queue.isEmpty()) {
         wait();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
       }
+    } catch (InterruptedException e) {
+      LOGGER.warning(Thread.currentThread().getName() + " interrupted in take");
     }
-
-    T poll = queue.poll();
-    notifyAll();
-    return poll;
+    if (queue.size() == size) {
+      notifyAll();
+    }
+    return queue.poll();
   }
 
 
-  public synchronized void put(T t) {
+  public synchronized void put(T t) throws WorkQueueIsFullException {
     Objects.requireNonNull(t);
-    while (queue.size() >= size) {
-      try {
-        wait();
-      } catch (InterruptedException e1) {
-        e1.printStackTrace();
-      }
+    if (queue.size() >= size) {
+      throw new WorkQueueIsFullException();
     }
+
+//    try {
+//      while (queue.size() >= size) {
+//        wait();
+//      }
+//    } catch (InterruptedException e) {
+//    LOGGER.warning(Thread.currentThread().getName() + " interrupted in put");
+//    }
+
+//    if (queue.isEmpty()) {
+      notifyAll();
+//    }
     queue.add(t);
-    notifyAll();
   }
 }
