@@ -18,10 +18,7 @@
     <module>proxyObject</module>
     <module>Microbenchmarking</module>
     <module>ThreadPool</module>
-    <module>MyBankApp</module>
     <module>Concurrency</module>
-
-
   </modules>
 
 

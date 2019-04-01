@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-
+  <packaging>pom</packaging>
   <artifactId>cglib_proxy</artifactId>
 <dependencies>
   <dependency>
@@ -18,10 +18,17 @@
   </dependency>
   <dependency>
     <groupId>ua.procamp</groupId>
+    <artifactId>customClassLoader</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
+    <groupId>ua.procamp</groupId>
     <artifactId>proxyObject</artifactId>
     <version>1.0-SNAPSHOT</version>
     <scope>compile</scope>
   </dependency>
+
 
 </dependencies>
 

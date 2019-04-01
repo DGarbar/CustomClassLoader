@@ -10,10 +10,17 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>jdk_proxy</artifactId>
+  <packaging>pom</packaging>
   <dependencies>
     <dependency>
       <groupId>ua.procamp</groupId>
       <artifactId>proxyObject</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>ua.procamp</groupId>
+      <artifactId>customClassLoader</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>

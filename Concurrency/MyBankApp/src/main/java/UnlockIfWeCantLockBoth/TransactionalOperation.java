@@ -10,7 +10,7 @@ public class TransactionalOperation {
     Lock lock2 = account2.getLock();
     Lock lock1 = account1.getLock();
     try {
-      while (true) {
+      while (!Thread.currentThread().isInterrupted()) {
         if (lock1.tryLock()) {
           if (lock2.tryLock()) {
             operation.accept(account1, account2);

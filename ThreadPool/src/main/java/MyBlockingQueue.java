@@ -22,6 +22,7 @@ public class MyBlockingQueue<T> {
       }
     } catch (InterruptedException e) {
       LOGGER.warning(Thread.currentThread().getName() + " interrupted in take");
+      Thread.currentThread().interrupt();
     }
     if (queue.size() == size) {
       notifyAll();
